@@ -2,36 +2,6 @@ package life.genny;
 
 
 
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.Logger;
-import org.kie.api.KieBase;
-import org.kie.api.KieBaseConfiguration;
-import org.kie.api.KieServices;
-import org.kie.api.builder.KieBuilder;
-import org.kie.api.builder.KieFileSystem;
-import org.kie.api.builder.Message;
-import org.kie.api.builder.ReleaseId;
-import org.kie.api.io.ResourceType;
-import org.kie.api.runtime.KieContainer;
-import org.kie.api.runtime.KieSession;
-import org.kie.api.runtime.KieSessionConfiguration;
-import org.kie.api.runtime.conf.TimedRuleExecutionOption;
-
-import com.beust.jcommander.JCommander;
-import com.beust.jcommander.Parameter;
-
-import io.vavr.Tuple;
-import io.vavr.Tuple2;
-import io.vavr.Tuple3;
-import io.vertx.core.json.DecodeException;
-import io.vertx.core.json.JsonObject;
-import io.vertx.rxjava.core.Vertx;
-import io.vertx.rxjava.core.buffer.Buffer;
-import life.genny.qwandautils.GennySettings;
-import life.genny.qwandautils.KeycloakUtils;
-import life.genny.utils.RulesUtils;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -45,9 +15,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
+import org.apache.logging.log4j.Logger;
+import org.kie.api.KieBase;
+import org.kie.api.KieBaseConfiguration;
+import org.kie.api.KieServices;
+import org.kie.api.builder.KieBuilder;
+import org.kie.api.builder.KieFileSystem;
+import org.kie.api.builder.Message;
+import org.kie.api.builder.ReleaseId;
+import org.kie.api.io.ResourceType;
+import org.kie.api.runtime.KieContainer;
+
+import com.beust.jcommander.JCommander;
+import com.beust.jcommander.Parameter;
+
+import io.vavr.Tuple;
+import io.vavr.Tuple2;
+import io.vavr.Tuple3;
+import io.vertx.core.json.DecodeException;
+import io.vertx.rxjava.core.Vertx;
+import io.vertx.rxjava.core.buffer.Buffer;
+import life.genny.qwandautils.GennySettings;
+import life.genny.qwandautils.KeycloakUtils;
 
 
 
@@ -80,7 +69,7 @@ public class App {
 			System.out.println("Genny Drools Rules Checker V1.0\n");
 		}
 		JCommander jCommander = new JCommander(main, args);
-		if ((main.help) || ((args.length == 0))) {
+		if ((main.help) ) {
 			jCommander.usage();
 			return;
 		}
@@ -90,7 +79,7 @@ public class App {
 
 	public void runs() {
 
-		if (rulesdirs == null) {
+		if ((rulesdirs == null)||rulesdirs.isEmpty()) {
 			rulesdirs = new ArrayList<String>();
 			rulesdirs.add("/rules"); // default
 		}
