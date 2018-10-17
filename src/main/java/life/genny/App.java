@@ -66,7 +66,7 @@ public class App {
 	@Parameter(names = "--help", help = true)
 	private boolean help = false;
 
-	@Parameter(names = { "--rulesdir", "-r" }, description = "Rules Dir", required = true)
+	@Parameter(names = { "--rulesdir", "-r" }, description = "Rules Dir", required = false)
 	List<String> rulesdirs;
 
 
@@ -84,13 +84,17 @@ public class App {
 			jCommander.usage();
 			return;
 		}
-		if (args.length > 0) {
 			main.runs();
-		}
+		
 	}
 
 	public void runs() {
 
+		if (rulesdirs == null) {
+			rulesdirs = new ArrayList<String>();
+			rulesdirs.add("/rules"); // default
+		}
+		
 		for (String rulesdir : rulesdirs) {
 			System.out.println("Rulesdir = "+rulesdir);
 			loadInitialRules(rulesdir);
