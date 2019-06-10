@@ -1,3 +1,2 @@
 #/bin/bash
-
-docker run -v $PWD:/rules  -it --rm gennyproject/checkrules -r /rules 
+docker run -it gennyproject/create-encrypted-password -k WubbaLubbaDubDub -c genny -p 'YoDudeIamapublicPassword'
